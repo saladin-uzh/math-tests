@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import GlobalStyles from './AppStyles'
 
-import { Header, Question } from './components'
+import { Header, TestBlock } from './components'
 
 const App = styled.div`
   text-align: center;
@@ -16,7 +16,7 @@ export default () => (
     <GlobalStyles />
     <App>
       <Header heading={'Heading'} />
-      <Question />
+      <TestBlock />
     </App>
   </>
 )
