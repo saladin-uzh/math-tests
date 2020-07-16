@@ -1,5 +1,5 @@
 export default {
-  main: 'white',
-  shadow: 'black',
-  text: 'black',
+  white: 'white',
+  grey0: 'grey',
+  grey1: 'black',
 }

@@ -1,5 +1,6 @@
 import Header from './Header'
+import Preloader from './Preloader'
 import Question from './Question'
-import TestBlock from './TestBlock'
+import Answear from './Answear'
 
-export { Header, Question, TestBlock }
+export { Header, Preloader, Question, Answear }

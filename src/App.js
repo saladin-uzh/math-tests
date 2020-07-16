@@ -1,22 +1,28 @@
 import React from 'react'
-import styled from 'styled-components'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
-import GlobalStyles from './AppStyles'
+import { FirebaseProvider } from './utils/firebase'
 
-import { Header, TestBlock } from './components'
+import { routes } from './constants'
 
-const App = styled.div`
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-`
+import { GlobalStyles, AppContainer } from './AppUI'
+
+import { Header } from './components'
 
 export default () => (
   <>
     <GlobalStyles />
-    <App>
-      <Header heading={'Heading'} />
-      <TestBlock />
-    </App>
+    <FirebaseProvider>
+      <Router>
+        <AppContainer>
+          <Header heading={'Heading'} />
+          <Switch>
+            {routes.map((route) => (
+              <Route {...route} />
+            ))}
+          </Switch>
+        </AppContainer>
+      </Router>
+    </FirebaseProvider>
   </>
 )
