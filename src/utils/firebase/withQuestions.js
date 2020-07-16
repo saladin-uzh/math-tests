@@ -1,8 +1,20 @@
-import React from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 
-import useQuestions from './useQuestions'
+import { FirebaseContext } from './context'
 
 export default (Component) => () => {
-  const questions = useQuestions()
+  const [questions, setQuestions] = useState([])
+  const { firestore } = useContext(FirebaseContext)
+
+  useEffect(() => {
+    firestore
+      .collection('questions')
+      .get()
+      .then(({ docs }) => {
+        const questions = docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+        setQuestions(questions)
+      })
+  }, [firestore])
+
   return <Component questions={questions} />
 }

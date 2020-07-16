@@ -2,6 +2,7 @@ import React, { createContext } from 'react'
 
 import firebase from 'firebase/app'
 import 'firebase/firestore'
+import 'firebase/auth'
 
 import { firebaseConfig } from '../../config'
 
@@ -12,6 +13,7 @@ export const FirebaseProvider = ({ children }) => {
 
   const firebaseContext = {
     firestore: app.firestore(),
+    auth: app.auth(),
   }
 
   return (
