@@ -1,8 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import GlobalStyles from './AppStyles'
-
 import { Header, TestBlock } from './components'
 
 const App = styled.div`
@@ -11,12 +9,13 @@ const App = styled.div`
   flex-direction: column;
 `
 
-export default () => (
-  <>
-    <GlobalStyles />
+export default () => {
+  const titleBarText = 'Heading'
+
+  return (
     <App>
-      <Header heading={'Heading'} />
+      <Header heading={titleBarText} />
       <TestBlock />
     </App>
-  </>
-)
+  )
+}

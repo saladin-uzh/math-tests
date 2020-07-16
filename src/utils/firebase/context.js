@@ -1,18 +1,22 @@
-import React, { Children, createContext } from 'react'
-import Firebase from './fbase'
+import React, { createContext } from 'react'
 
-const { Provider, Consumer } = createContext(new Firebase(false))
+import firebase from 'firebase/app'
+import 'firebase/firestore'
 
-export const FirebaseProvider = ({ children }) => (
-  <Provider value={new Firebase()}>{Children.only(children)}</Provider>
-)
+import { firebaseConfig } from '../../config'
 
-export const withFirebase = (Component) => {
-  const FirebaseConsumer = (props) => (
-    <Consumer>
-      {(firebase) => <Component {...props} firebase={firebase} />}
-    </Consumer>
+export const FirebaseContext = createContext()
+
+export const FirebaseProvider = ({ children }) => {
+  const app = firebase.initializeApp(firebaseConfig)
+
+  const firebaseContext = {
+    firestore: app.firestore(),
+  }
+
+  return (
+    <FirebaseContext.Provider value={firebaseContext}>
+      {children}
+    </FirebaseContext.Provider>
   )
-
-  return FirebaseConsumer
 }

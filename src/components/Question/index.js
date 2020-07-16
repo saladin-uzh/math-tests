@@ -43,9 +43,10 @@ export default ({
   <Question>
     <QuestionText>{questionText}</QuestionText>
     <AnswearsBlock>
-      {answears.map((answear, index) => (
-        <Answear value={index} text={answear} />
-      ))}
+      {answears &&
+        answears.map((answear, index) => (
+          <Answear value={index} text={answear} key={index} />
+        ))}
     </AnswearsBlock>
     <ButtonsBlock>
       {isPrevButtonShown && (

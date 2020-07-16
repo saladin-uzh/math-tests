@@ -1,4 +1,4 @@
-import { withFirebase, FirebaseProvider } from './context'
-import Firebase from './fbase'
+import { FirebaseProvider } from './context'
+import withQuestions from './withQuestions'
 
-export { FirebaseProvider, withFirebase, Firebase }
+export { FirebaseProvider, withQuestions }
