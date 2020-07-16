@@ -1,9 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import App from './App'
-import GlobalStyles from './AppStyles'
 import { FirebaseProvider } from './utils/firebase'
+
+import GlobalStyles from './AppStyles'
+import App from './App'
 
 ReactDOM.render(
   <>

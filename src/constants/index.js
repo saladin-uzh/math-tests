@@ -1,3 +1,4 @@
 import colors from './colors'
+import routes from './routes'
 
-export { colors }
+export { colors, routes }

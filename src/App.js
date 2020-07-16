@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
-import { Header, TestBlock } from './components'
+import { routes } from './constants'
 
 const App = styled.div`
   text-align: center;
@@ -9,13 +10,14 @@ const App = styled.div`
   flex-direction: column;
 `
 
-export default () => {
-  const titleBarText = 'Heading'
-
-  return (
-    <App>
-      <Header heading={titleBarText} />
-      <TestBlock />
-    </App>
-  )
-}
+export default () => (
+  <App>
+    <Router>
+      <Switch>
+        {routes.map((route) => (
+          <Route {...route} />
+        ))}
+      </Switch>
+    </Router>
+  </App>
+)
