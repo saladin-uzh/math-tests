@@ -1,62 +1,64 @@
-import React from 'react'
-import styled from 'styled-components'
+import React, { useState, useEffect } from 'react'
 
-import Answear from './Answear'
+import {
+  QuestionForm,
+  QuestionText,
+  AnswearsFieldset,
+  ButtonsFieldset,
+  PrevQuestionButton,
+  SubmitAnswearButton,
+} from './ui'
 
-const Question = styled.form`
-  display: flex;
-  flex-direction: column;
-`
-
-const QuestionText = styled.p`
-  margin-left: 3vh;
-  align-self: flex-start;
-`
-
-const AnswearsBlock = styled.fieldset`
-  display: flex;
-  flex-direction: column;
-  border: none;
-  align-items: flex-start;
-`
-
-const ButtonsBlock = styled.fieldset`
-  display: flex;
-  justify-content: space-between;
-  border: none;
-`
-
-const PrevQuestionButton = styled.button``
-
-const SubmitAnswearButton = styled.button`
-  margin: 0 0 0 auto;
-`
+import { Answear } from '../../components'
 
 export default ({
+  id,
   questionText,
   answears,
+  selectedAnswear,
   nextStep,
   prevStep,
   isPrevButtonShown,
   isLastStep,
-}) => (
-  <Question>
-    <QuestionText>{questionText}</QuestionText>
-    <AnswearsBlock>
-      {answears &&
-        answears.map((answear, index) => (
-          <Answear value={index} text={answear} key={index} />
-        ))}
-    </AnswearsBlock>
-    <ButtonsBlock>
-      {isPrevButtonShown && (
-        <PrevQuestionButton type="button" onClick={() => prevStep()}>
-          {'<<'}
-        </PrevQuestionButton>
-      )}
-      <SubmitAnswearButton type="button" onClick={() => nextStep()}>
-        {isLastStep ? 'Submit Answears' : 'Next Question'}
-      </SubmitAnswearButton>
-    </ButtonsBlock>
-  </Question>
-)
+}) => {
+  const [answear, setAnswear] = useState()
+
+  useEffect(() => {
+    setAnswear({ id, answear: selectedAnswear })
+  }, [id, selectedAnswear])
+
+  const handleAnswearSelect = (event) => {
+    setAnswear({
+      id,
+      answear: event.target.value,
+    })
+  }
+
+  return (
+    <QuestionForm>
+      <QuestionText>{questionText}</QuestionText>
+      <AnswearsFieldset>
+        {answears &&
+          answears.map((answear, index) => (
+            <Answear
+              key={`${id}=${index}`}
+              value={index}
+              text={answear}
+              handleChange={handleAnswearSelect}
+              isSelectedAnswear={selectedAnswear === index}
+            />
+          ))}
+      </AnswearsFieldset>
+      <ButtonsFieldset>
+        {isPrevButtonShown && (
+          <PrevQuestionButton type="button" onClick={() => prevStep()}>
+            {'<<'}
+          </PrevQuestionButton>
+        )}
+        <SubmitAnswearButton type="button" onClick={() => nextStep(answear)}>
+          {isLastStep ? 'Submit Answears' : 'Next Question'}
+        </SubmitAnswearButton>
+      </ButtonsFieldset>
+    </QuestionForm>
+  )
+}

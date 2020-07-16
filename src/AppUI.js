@@ -1,6 +1,6 @@
-import { createGlobalStyle } from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 
-export default createGlobalStyle`
+export const GlobalStyles = createGlobalStyle`
   body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -23,4 +23,10 @@ export default createGlobalStyle`
       transform: rotate(360deg);
     }
   }
+`
+
+export const AppContainer = styled.div`
+  text-align: center;
+  display: flex;
+  flex-direction: column;
 `

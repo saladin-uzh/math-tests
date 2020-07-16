@@ -1,9 +1,4 @@
-import styled from 'styled-components'
-import { colors } from '../../constants'
+import React from 'react'
+import { Preloader } from './ui'
 
-export default styled.div`
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background-color: ${colors.grey0};
-`
+export default ({ isShown }) => <Preloader isShown={isShown} />
