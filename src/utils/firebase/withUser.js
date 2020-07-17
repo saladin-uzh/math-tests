@@ -11,11 +11,8 @@ export default (Component) => () => {
   const { from } = location.state || { from: { pathname: '/' } }
 
   const loginUser = ({ email, password }) => {
-    console.log('Logging in')
-
     return auth.signInWithEmailAndPassword(email, password).then(
       () => {
-        console.log('Logged in')
         history.replace(from)
       },
       (err) => console.error(err)

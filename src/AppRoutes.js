@@ -31,6 +31,15 @@ const PrivateRoute = ({
   />
 )
 
+const PublicRoute = ({ component: Component, isAuthentificated, ...route }) => (
+  <Route
+    {...route}
+    render={(props) =>
+      !isAuthentificated ? <Component {...props} /> : <Redirect to="/" />
+    }
+  />
+)
+
 const AppRoutes = () => {
   const isAuthentificated = useAuthState()
 
@@ -42,7 +51,7 @@ const AppRoutes = () => {
             isPrivate ? (
               <PrivateRoute isAuthentificated={isAuthentificated} {...route} />
             ) : (
-              <Route {...route} />
+              <PublicRoute isAuthentificated={isAuthentificated} {...route} />
             )
           )}
         </Switch>

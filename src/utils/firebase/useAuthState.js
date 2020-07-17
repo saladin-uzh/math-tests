@@ -3,14 +3,11 @@ import { useState, useEffect, useContext } from 'react'
 import { FirebaseContext } from './context'
 
 export default () => {
-  const [isAuthentificated, setIsAuthentificated] = useState(false)
   const { auth } = useContext(FirebaseContext)
+  const [isAuthentificated, setIsAuthentificated] = useState(false)
 
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) setIsAuthentificated(true)
-      else setIsAuthentificated(false)
-    })
+    auth.onAuthStateChanged((user) => setIsAuthentificated(Boolean(user)))
   }, [auth])
 
   return isAuthentificated
