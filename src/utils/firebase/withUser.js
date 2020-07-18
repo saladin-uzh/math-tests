@@ -1,23 +1,43 @@
-import React, { useContext } from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
+import React from 'react'
+// import { useHistory, useLocation } from 'react-router-dom'
 
-import { FirebaseContext } from './context'
+import { useFirebase } from './context'
 
-export default (Component) => () => {
-  const { auth } = useContext(FirebaseContext)
-  const history = useHistory()
-  const location = useLocation()
+export default (Component) => (props) => {
+  const { auth } = useFirebase()
+  const { history, location } = props
 
-  const { from } = location.state || { from: { pathname: '/' } }
+  const user = {
+    api: {
+      signIn: ({ email, password }) => {
+        const { from } = location.state || { from: { pathname: '/' } }
 
-  const loginUser = ({ email, password }) => {
-    return auth.signInWithEmailAndPassword(email, password).then(
-      () => {
-        history.replace(from)
+        return auth.signInWithEmailAndPassword(email, password).then(
+          () => {
+            history.replace(from)
+          },
+          (err) => console.error(err)
+        )
       },
-      (err) => console.error(err)
-    )
+      signOut: () =>
+        auth.signOut().then(
+          () => console.log('Logged Out'),
+          (err) => console.error(err)
+        ),
+    },
+    data: {
+      email: '',
+      displayName: '',
+      uid: '',
+    },
   }
 
-  return <Component loginUser={loginUser} />
+  const { currentUser } = auth
+
+  if (currentUser) {
+    const { email, displayName, uid } = currentUser
+    user.data = { email, displayName, uid }
+  }
+
+  return <Component user={user} {...props} />
 }

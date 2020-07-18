@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from 'react'
 
 import { useAnswears, useStep } from '../utils'
-import { withQuestions } from '../utils/firebase'
+import { withQuestions, withUser } from '../utils/firebase'
 
-import { Question } from '../components'
+import { Question, Header } from '../components'
 
-const HomePage = ({ questions }) => {
+const HomePage = ({
+  user: {
+    api: { signOut },
+    data: { email, displayName },
+  },
+  questions,
+}) => {
   const [step, setStep] = useStep()
   const [answears, setAnswears] = useAnswears()
-
   const [currentQuestion, setCurrentQuestion] = useState({})
   const [selectedAnswear, setSelectedAnswear] = useState(null)
 
@@ -51,19 +56,30 @@ const HomePage = ({ questions }) => {
     }
   }, [step, questions, answears])
 
+  const pageHeading = `Question №${step + 1}`
+  const userName = Boolean(displayName) ? displayName : email
+
   const isPrevButtonShown = step > 0
   const isLastStep = step + 1 === questions.length
 
   return (
-    <Question
-      nextStep={nextStep}
-      prevStep={prevStep}
-      isPrevButtonShown={isPrevButtonShown}
-      isLastStep={isLastStep}
-      selectedAnswear={selectedAnswear}
-      {...currentQuestion}
-    />
+    <>
+      <Header
+        pageHeading={pageHeading}
+        userName={userName}
+        onLogoutButtonClick={signOut}
+        hasSignedUser
+      />
+      <Question
+        nextStep={nextStep}
+        prevStep={prevStep}
+        isPrevButtonShown={isPrevButtonShown}
+        isLastStep={isLastStep}
+        selectedAnswear={selectedAnswear}
+        {...currentQuestion}
+      />
+    </>
   )
 }
 
-export default withQuestions(HomePage)
+export default withUser(withQuestions(HomePage))

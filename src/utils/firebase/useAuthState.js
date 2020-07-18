@@ -1,9 +1,9 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect } from 'react'
 
-import { FirebaseContext } from './context'
+import { useFirebase } from './context'
 
 export default () => {
-  const { auth } = useContext(FirebaseContext)
+  const { auth } = useFirebase()
   const [isAuthentificated, setIsAuthentificated] = useState(false)
 
   useEffect(() => {

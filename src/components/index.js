@@ -1,7 +1,6 @@
-import Header from './Header'
+import HeaderContainer from './Header'
 import Preloader from './Preloader'
 import Question from './Question'
-import Answear from './Answear'
 import LoginForm from './LoginForm'
 
-export { Header, Preloader, Question, Answear, LoginForm }
+export { HeaderContainer as Header, Preloader, Question, LoginForm }
