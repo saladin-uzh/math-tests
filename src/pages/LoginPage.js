@@ -4,13 +4,19 @@ import { withUser } from '../utils/firebase'
 
 import { LoginForm, Header } from '../components'
 
-const LoginPage = ({ loginUser }) => {
-  const handleUserLogin = (credentials) => loginUser(credentials)
+const LoginPage = ({
+  user: {
+    api: { signIn },
+  },
+}) => {
+  const handleUserSignIn = (credentials) => signIn(credentials)
+
+  const pageHeading = 'Login'
 
   return (
     <>
-      <Header heading={'Login'} />
-      <LoginForm loginUser={handleUserLogin} />
+      <Header pageHeading={pageHeading} />
+      <LoginForm onLoginButtonClick={handleUserSignIn} />
     </>
   )
 }

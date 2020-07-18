@@ -12,52 +12,38 @@ import { routes } from './constants'
 
 import { AppContainer } from './AppUI'
 
-const PrivateRoute = ({
-  component: Component,
-  isAuthentificated,
-  ...route
-}) => (
-  <Route
-    {...route}
-    render={(props) =>
-      isAuthentificated ? (
-        <Component {...props} />
-      ) : (
-        <Redirect
-          to={{ pathname: '/login', state: { from: props.location } }}
-        />
-      )
-    }
-  />
-)
-
-const PublicRoute = ({ component: Component, isAuthentificated, ...route }) => (
-  <Route
-    {...route}
-    render={(props) =>
-      !isAuthentificated ? <Component {...props} /> : <Redirect to="/" />
-    }
-  />
-)
-
-const AppRoutes = () => {
+export default () => {
   const isAuthentificated = useAuthState()
 
   return (
     <Router>
       <AppContainer>
         <Switch>
-          {routes.map(({ isPrivate, ...route }) =>
-            isPrivate ? (
-              <PrivateRoute isAuthentificated={isAuthentificated} {...route} />
-            ) : (
-              <PublicRoute isAuthentificated={isAuthentificated} {...route} />
-            )
-          )}
+          {routes.map(({ isPrivate, component: Component, ...routeProps }) => (
+            <Route
+              {...routeProps}
+              render={(componentProps) =>
+                isPrivate ? (
+                  isAuthentificated ? (
+                    <Component {...componentProps} />
+                  ) : (
+                    <Redirect
+                      to={{
+                        pathname: '/login',
+                        state: { from: componentProps.location },
+                      }}
+                    />
+                  )
+                ) : !isAuthentificated ? (
+                  <Component {...componentProps} />
+                ) : (
+                  <Redirect to="/" />
+                )
+              }
+            />
+          ))}
         </Switch>
       </AppContainer>
     </Router>
   )
 }
-
-export default AppRoutes

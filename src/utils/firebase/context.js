@@ -1,4 +1,4 @@
-import React, { createContext } from 'react'
+import React, { createContext, useContext } from 'react'
 
 import firebase from 'firebase/app'
 import 'firebase/firestore'
@@ -6,7 +6,7 @@ import 'firebase/auth'
 
 import { firebaseConfig } from '../../config'
 
-export const FirebaseContext = createContext()
+const FirebaseContext = createContext()
 
 export const FirebaseProvider = ({ children }) => {
   const app = firebase.initializeApp(firebaseConfig)
@@ -21,4 +21,9 @@ export const FirebaseProvider = ({ children }) => {
       {children}
     </FirebaseContext.Provider>
   )
+}
+
+export const useFirebase = () => {
+  const firebase = useContext(FirebaseContext)
+  return firebase
 }

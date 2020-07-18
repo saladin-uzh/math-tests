@@ -5,11 +5,12 @@ import {
   CredentialsFieldset,
   ButtonsFieldset,
   InputLabel,
+  Input,
   LoginButton,
   SignupButton,
 } from './ui'
 
-export default ({ loginUser }) => {
+export default ({ onLoginButtonClick }) => {
   const [credentials, setCredentials] = useState({
     email: '',
     password: '',
@@ -24,12 +25,14 @@ export default ({ loginUser }) => {
     })
   }
 
+  const handleLoginButtonClick = () => onLoginButtonClick(credentials)
+
   return (
     <LoginForm>
       <CredentialsFieldset>
         <InputLabel>
           Your email:
-          <input
+          <Input
             type="email"
             name="email"
             value={credentials.email}
@@ -38,7 +41,7 @@ export default ({ loginUser }) => {
         </InputLabel>
         <InputLabel>
           Your password:
-          <input
+          <Input
             type="password"
             name="password"
             value={credentials.password}
@@ -48,7 +51,7 @@ export default ({ loginUser }) => {
       </CredentialsFieldset>
       <ButtonsFieldset>
         <SignupButton type="button">Sign Up</SignupButton>
-        <LoginButton type="button" onClick={() => loginUser(credentials)}>
+        <LoginButton type="button" onClick={handleLoginButtonClick}>
           Log In
         </LoginButton>
       </ButtonsFieldset>

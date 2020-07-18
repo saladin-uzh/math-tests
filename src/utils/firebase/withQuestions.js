@@ -1,10 +1,10 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 
-import { FirebaseContext } from './context'
+import { useFirebase } from './context'
 
-export default (Component) => () => {
+export default (Component) => (props) => {
   const [questions, setQuestions] = useState([])
-  const { firestore } = useContext(FirebaseContext)
+  const { firestore } = useFirebase()
 
   useEffect(() => {
     firestore
@@ -16,5 +16,5 @@ export default (Component) => () => {
       })
   }, [firestore])
 
-  return <Component questions={questions} />
+  return <Component questions={questions} {...props} />
 }

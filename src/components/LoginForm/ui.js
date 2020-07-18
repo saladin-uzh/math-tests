@@ -1,9 +1,12 @@
 import styled from 'styled-components'
 
+import { spacings } from '../../constants'
+
 export const LoginForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: ${spacings.small} 0 0;
 `
 
 export const CredentialsFieldset = styled.fieldset`
@@ -22,11 +25,15 @@ export const ButtonsFieldset = styled.fieldset`
 export const InputLabel = styled.label`
   display: flex;
   flex-direction: column;
-  margin: 5px 0 0 0;
+  margin: ${spacings.medium} 0 0;
+`
+
+export const Input = styled.input`
+  margin: ${spacings.small} 0 0;
 `
 
 export const LoginButton = styled.button`
-  margin: 0 0 0 5px;
+  margin: 0 0 ${spacings.small};
 `
 
 export const SignupButton = styled.button`
