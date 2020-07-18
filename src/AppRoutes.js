@@ -6,14 +6,13 @@ import {
   Redirect,
 } from 'react-router-dom'
 
-import { withPreloader } from './utils'
 import { useAuthState } from './utils/firebase'
 
 import { routes } from './constants'
 
 import { AppContainer } from './AppUI'
 
-const GlobalRoutes = ({ preloader: { hidePreloader } }) => {
+export default () => {
   const isAuthentificated = useAuthState()
 
   return (
@@ -48,5 +47,3 @@ const GlobalRoutes = ({ preloader: { hidePreloader } }) => {
     </Router>
   )
 }
-
-export default withPreloader(GlobalRoutes)

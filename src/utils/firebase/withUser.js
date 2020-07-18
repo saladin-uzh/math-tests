@@ -20,7 +20,7 @@ export default (Component) => (props) => {
       },
       signOut: () =>
         auth.signOut().then(
-          () => console.log('Logged Out'),
+          () => localStorage.clear(),
           (err) => console.error(err)
         ),
     },

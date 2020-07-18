@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
-import { useAnswears, useStep, usePreloader } from '../utils'
+import { useAnswears, useStep } from '../utils'
+import { withPreloader } from '../utils/preloader'
 import { withQuestions, withUser } from '../utils/firebase'
 
 import { Question, Header } from '../components'
@@ -11,12 +12,12 @@ const HomePage = ({
     data: { email, displayName },
   },
   questions,
+  preloader: { showPreloader, hidePreloader },
 }) => {
   const [step, setStep] = useStep()
   const [answears, setAnswears] = useAnswears()
   const [currentQuestion, setCurrentQuestion] = useState({})
   const [selectedAnswear, setSelectedAnswear] = useState(null)
-  const { showPreloader, hidePreloader } = usePreloader()
 
   const handleAnswearsChange = (newAnswear) => {
     const newAnswears = answears || []
@@ -34,17 +35,16 @@ const HomePage = ({
   const nextStep = (newAnswear) => {
     handleAnswearsChange(newAnswear)
 
-    if (!isLastStep) setStep(step + 1)
+    if (!isLastStep) setStep((step) => step + 1)
     else submitAnswears()
   }
 
-  const prevStep = () => setStep(step - 1)
+  const prevStep = () => setStep((step) => step - 1)
 
   const submitAnswears = () => alert('Answears submitted!')
 
   useEffect(() => {
     showPreloader()
-
     if (questions[step]) {
       hidePreloader()
       setCurrentQuestion(questions[step])
@@ -58,7 +58,7 @@ const HomePage = ({
           setSelectedAnswear(parseInt(answears[selectedAnswearIndex].answear))
       }
     }
-  }, [step, questions, answears, showPreloader, hidePreloader])
+  }, [step, questions, answears, hidePreloader, showPreloader])
 
   const pageHeading = `Question №${step + 1}`
   const userName = Boolean(displayName) ? displayName : email
@@ -86,4 +86,4 @@ const HomePage = ({
   )
 }
 
-export default withUser(withQuestions(HomePage))
+export default withUser(withQuestions(withPreloader(HomePage)))

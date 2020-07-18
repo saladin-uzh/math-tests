@@ -32,4 +32,5 @@ export const UserName = styled.div`
 
 export const LogoutButton = styled.button`
   margin: 0 ${spacings.large} 0 0;
+  cursor: pointer;
 `

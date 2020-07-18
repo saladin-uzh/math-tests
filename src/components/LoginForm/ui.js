@@ -34,9 +34,11 @@ export const Input = styled.input`
 
 export const LoginButton = styled.button`
   margin: 0 0 ${spacings.small};
+  cursor: pointer;
 `
 
 export const SignupButton = styled.button`
   background: transparent;
   border: none;
+  cursor: pointer;
 `
