@@ -1,4 +1,4 @@
-import { HomePage, AdminPage, LoginPage } from '../pages'
+import { HomePage, AdminPage, LoginPage, SignUpPage } from '../pages'
 
 const PAGES = {
   HOME: {
@@ -15,6 +15,10 @@ const PAGES = {
   LOGIN: {
     path: '/login',
     component: LoginPage,
+  },
+  SIGNUP: {
+    path: '/signup',
+    component: SignUpPage,
   },
 }
 

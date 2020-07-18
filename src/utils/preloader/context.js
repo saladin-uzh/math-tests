@@ -1,6 +1,4 @@
-import React, { useState, createContext, useContext, useCallback } from 'react'
-
-import { Preloader } from '../components'
+import React, { createContext, useState, useCallback, useContext } from 'react'
 
 const PreloaderContext = createContext({
   isShown: true,
@@ -8,7 +6,7 @@ const PreloaderContext = createContext({
   hidePreloader: () => {},
 })
 
-export const withPreloader = (Component) => (props) => {
+export const PreloaderProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true)
 
   const preloader = {
@@ -19,8 +17,7 @@ export const withPreloader = (Component) => (props) => {
 
   return (
     <PreloaderContext.Provider value={preloader}>
-      <Preloader isShown={isLoading} />
-      <Component preloader={preloader} {...props} />
+      {children}
     </PreloaderContext.Provider>
   )
 }

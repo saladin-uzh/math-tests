@@ -26,6 +26,7 @@ export const AnswearLabel = styled.label`
   display: flex;
   align-items: center;
   margin: 0 0 ${spacings.small};
+  cursor: pointer;
 `
 
 export const AnswearInput = styled.input`
@@ -41,9 +42,10 @@ export const ButtonsFieldset = styled.fieldset`
 `
 
 export const PrevQuestionButton = styled.button`
-  margin: 0 auto 0 0;
+  cursor: pointer;
 `
 
 export const SubmitAnswearButton = styled.button`
-  margin: 0 ${spacings.large} 0 0;
+  margin: 0 ${spacings.large} 0 auto;
+  cursor: pointer;
 `

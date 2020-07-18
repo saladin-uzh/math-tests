@@ -1,7 +1,7 @@
 import React from 'react'
 
+import { withPreloader } from '../utils'
 import { withUser } from '../utils/firebase'
-import { usePreloader } from '../utils'
 
 import { LoginForm, Header } from '../components'
 
@@ -9,9 +9,8 @@ const LoginPage = ({
   user: {
     api: { signIn },
   },
+  preloader: { showPreloader },
 }) => {
-  const { showPreloader } = usePreloader()
-
   const handleUserSignIn = (credentials) => {
     showPreloader()
     signIn(credentials)
@@ -27,4 +26,4 @@ const LoginPage = ({
   )
 }
 
-export default withUser(LoginPage)
+export default withUser(withPreloader(LoginPage))
