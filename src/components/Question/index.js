@@ -40,9 +40,8 @@ export default ({
       <AnswearsFieldset>
         {answears &&
           answears.map((answear, index) => (
-            <AnswearLabel>
+            <AnswearLabel key={`${id}=${index}`}>
               <AnswearInput
-                key={`${id}=${index}`}
                 type="radio"
                 name="answear"
                 value={index}

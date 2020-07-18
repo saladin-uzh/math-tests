@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { withUser } from '../utils/firebase'
+import { usePreloader } from '../utils'
 
 import { LoginForm, Header } from '../components'
 
@@ -9,7 +10,12 @@ const LoginPage = ({
     api: { signIn },
   },
 }) => {
-  const handleUserSignIn = (credentials) => signIn(credentials)
+  const { showPreloader } = usePreloader()
+
+  const handleUserSignIn = (credentials) => {
+    showPreloader()
+    signIn(credentials)
+  }
 
   const pageHeading = 'Login'
 

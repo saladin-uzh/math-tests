@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { useAnswears, useStep } from '../utils'
+import { useAnswears, useStep, usePreloader } from '../utils'
 import { withQuestions, withUser } from '../utils/firebase'
 
 import { Question, Header } from '../components'
@@ -16,6 +16,7 @@ const HomePage = ({
   const [answears, setAnswears] = useAnswears()
   const [currentQuestion, setCurrentQuestion] = useState({})
   const [selectedAnswear, setSelectedAnswear] = useState(null)
+  const { showPreloader, hidePreloader } = usePreloader()
 
   const handleAnswearsChange = (newAnswear) => {
     const newAnswears = answears || []
@@ -42,7 +43,10 @@ const HomePage = ({
   const submitAnswears = () => alert('Answears submitted!')
 
   useEffect(() => {
+    showPreloader()
+
     if (questions[step]) {
+      hidePreloader()
       setCurrentQuestion(questions[step])
 
       if (answears) {
@@ -54,7 +58,7 @@ const HomePage = ({
           setSelectedAnswear(parseInt(answears[selectedAnswearIndex].answear))
       }
     }
-  }, [step, questions, answears])
+  }, [step, questions, answears, showPreloader, hidePreloader])
 
   const pageHeading = `Question №${step + 1}`
   const userName = Boolean(displayName) ? displayName : email
