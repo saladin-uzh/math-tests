@@ -12,24 +12,15 @@ const LoginPage = ({
     api: { signIn },
   },
   history,
-  location,
 }) => {
   const { showPreloader, hidePreloader } = usePreloader()
   const handleUserSignIn = (credentials) => {
     showPreloader()
 
-    const { from } = location.state || {
-      from: { pathname: PAGES.HOME.path },
-    }
-
-    signIn(
-      credentials,
-      () => history.replace(from),
-      ({ message }) => {
-        hidePreloader()
-        console.error(message)
-      }
-    )
+    signIn(credentials, ({ message }) => {
+      hidePreloader()
+      console.error(message)
+    })
   }
 
   const redirectToSignUp = () => history.replace(PAGES.SIGNUP.path)

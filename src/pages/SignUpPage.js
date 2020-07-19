@@ -17,14 +17,10 @@ const SignUpPage = ({
 
   const handleUserSignUp = (credentials) => {
     showPreloader()
-    signUp(
-      credentials,
-      () => history.replace(PAGES.HOME.path),
-      ({ message }) => {
-        console.error(message)
-        hidePreloader()
-      }
-    )
+    signUp(credentials, ({ message }) => {
+      console.error(message)
+      hidePreloader()
+    })
   }
 
   const redirectToSignIn = () => history.replace(PAGES.LOGIN.path)
