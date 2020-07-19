@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react'
 
-import { useAnswears, useStep } from '../utils'
-import { withQuestions } from '../utils/firebase'
+import { useAnswears, useStep, usePreloader } from '../utils'
+import { withQuestions, withUser } from '../utils/firebase'
 
-import { Question } from '../components'
+import { Question, Header } from '../components'
 
-const HomePage = ({ questions }) => {
+const HomePage = ({
+  user: {
+    api: { signOut },
+    data: { email, displayName },
+  },
+  questions,
+}) => {
   const [step, setStep] = useStep()
   const [answears, setAnswears] = useAnswears()
-
   const [currentQuestion, setCurrentQuestion] = useState({})
   const [selectedAnswear, setSelectedAnswear] = useState(null)
+  const { showPreloader, hidePreloader } = usePreloader()
 
   const handleAnswearsChange = (newAnswear) => {
     const newAnswears = answears || []
@@ -28,16 +34,18 @@ const HomePage = ({ questions }) => {
   const nextStep = (newAnswear) => {
     handleAnswearsChange(newAnswear)
 
-    if (!isLastStep) setStep(step + 1)
+    if (!isLastStep) setStep((step) => step + 1)
     else submitAnswears()
   }
 
-  const prevStep = () => setStep(step - 1)
+  const prevStep = () => setStep((step) => step - 1)
 
   const submitAnswears = () => alert('Answears submitted!')
 
   useEffect(() => {
+    showPreloader()
     if (questions[step]) {
+      hidePreloader()
       setCurrentQuestion(questions[step])
 
       if (answears) {
@@ -49,21 +57,32 @@ const HomePage = ({ questions }) => {
           setSelectedAnswear(parseInt(answears[selectedAnswearIndex].answear))
       }
     }
-  }, [step, questions, answears])
+  }, [step, questions, answears, hidePreloader, showPreloader])
+
+  const pageHeading = `Question №${step + 1}`
+  const userName = Boolean(displayName) ? displayName : email
 
   const isPrevButtonShown = step > 0
   const isLastStep = step + 1 === questions.length
 
   return (
-    <Question
-      nextStep={nextStep}
-      prevStep={prevStep}
-      isPrevButtonShown={isPrevButtonShown}
-      isLastStep={isLastStep}
-      selectedAnswear={selectedAnswear}
-      {...currentQuestion}
-    />
+    <>
+      <Header
+        pageHeading={pageHeading}
+        userName={userName}
+        onLogoutButtonClick={signOut}
+        hasSignedUser
+      />
+      <Question
+        nextStep={nextStep}
+        prevStep={prevStep}
+        isPrevButtonShown={isPrevButtonShown}
+        isLastStep={isLastStep}
+        selectedAnswear={selectedAnswear}
+        {...currentQuestion}
+      />
+    </>
   )
 }
 
-export default withQuestions(HomePage)
+export default withUser(withQuestions(HomePage))

@@ -4,12 +4,12 @@ import {
   QuestionForm,
   QuestionText,
   AnswearsFieldset,
+  AnswearLabel,
+  AnswearInput,
   ButtonsFieldset,
   PrevQuestionButton,
   SubmitAnswearButton,
 } from './ui'
-
-import { Answear } from '../../components'
 
 export default ({
   id,
@@ -40,13 +40,16 @@ export default ({
       <AnswearsFieldset>
         {answears &&
           answears.map((answear, index) => (
-            <Answear
-              key={`${id}=${index}`}
-              value={index}
-              text={answear}
-              handleChange={handleAnswearSelect}
-              isSelectedAnswear={selectedAnswear === index}
-            />
+            <AnswearLabel key={`${id}=${index}`}>
+              <AnswearInput
+                type="radio"
+                name="answear"
+                value={index}
+                defaultChecked={selectedAnswear === index}
+                onChange={handleAnswearSelect}
+              />
+              {answear}
+            </AnswearLabel>
           ))}
       </AnswearsFieldset>
       <ButtonsFieldset>

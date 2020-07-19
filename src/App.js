@@ -1,28 +1,20 @@
-import React from 'react'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import React, { StrictMode } from 'react'
 
 import { FirebaseProvider } from './utils/firebase'
+import { PreloaderProvider } from './utils/preloader'
 
-import { routes } from './constants'
-
-import { GlobalStyles, AppContainer } from './AppUI'
-
-import { Header } from './components'
+import { GlobalStyles } from './AppUI'
+import GlobalRoutes from './AppRoutes'
+import { Preloader } from './components'
 
 export default () => (
-  <>
+  <StrictMode>
     <GlobalStyles />
     <FirebaseProvider>
-      <Router>
-        <AppContainer>
-          <Header heading={'Heading'} />
-          <Switch>
-            {routes.map((route) => (
-              <Route {...route} />
-            ))}
-          </Switch>
-        </AppContainer>
-      </Router>
+      <PreloaderProvider>
+        <Preloader />
+        <GlobalRoutes />
+      </PreloaderProvider>
     </FirebaseProvider>
-  </>
+  </StrictMode>
 )
