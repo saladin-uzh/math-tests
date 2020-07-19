@@ -1,19 +1,16 @@
 import React from 'react'
 
 import { usePreloader } from '../utils'
-import { withUser } from '../utils/firebase'
+import { useUserAPI } from '../utils/firebase'
 
 import { PAGES } from '../constants'
 
-import { LoginForm, Header } from '../components'
+import { AuthForm, Header } from '../components'
 
-const LoginPage = ({
-  user: {
-    api: { signIn },
-  },
-  history,
-}) => {
+export default ({ history }) => {
   const { showPreloader, hidePreloader } = usePreloader()
+  const { signIn } = useUserAPI()
+
   const handleUserSignIn = (credentials) => {
     showPreloader()
 
@@ -30,12 +27,11 @@ const LoginPage = ({
   return (
     <>
       <Header pageHeading={pageHeading} />
-      <LoginForm
+      <AuthForm
+        type={AuthForm.types.SIGN_IN}
         onSubmit={handleUserSignIn}
-        onSingUpButtonClick={redirectToSignUp}
+        onSecondaryButtonClick={redirectToSignUp}
       />
     </>
   )
 }
-
-export default withUser(LoginPage)

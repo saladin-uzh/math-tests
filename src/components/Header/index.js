@@ -15,9 +15,10 @@ import {
 } from './ui'
 
 export default ({
-  pageHeading,
-  userName,
   onLogoutButtonClick,
+  onUserNameClick,
+  pageHeading = 'Math Tests',
+  userName = '',
   hasSignedUser = false,
 }) => {
   const [isMenuShown, setIsMenuShown] = useState(false)
@@ -33,7 +34,7 @@ export default ({
           <MenuButton icon={menuIcon} onClick={toggleMenu} />
           <FaintedBg isVisible={isMenuShown} onClick={toggleMenu} />
           <UserBlock isVisible={isMenuShown}>
-            <UserName>{userName}</UserName>
+            <UserName onClick={onUserNameClick}>{userName}</UserName>
             <LogoutButton onClick={onLogoutButtonClick}>Log out</LogoutButton>
           </UserBlock>
         </>

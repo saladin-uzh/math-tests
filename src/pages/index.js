@@ -1,6 +1,6 @@
 import LoginPage from './LoginPage'
 import HomePage from './HomePage'
-import AdminPage from './AdminPage'
+import UserProfilePage from './UserProfilePage'
 import SignUpPage from './SignUpPage'
 
-export { HomePage, AdminPage, LoginPage, SignUpPage }
+export { HomePage, UserProfilePage, LoginPage, SignUpPage }

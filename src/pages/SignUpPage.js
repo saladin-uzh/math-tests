@@ -5,7 +5,7 @@ import { withUser } from '../utils/firebase'
 
 import { PAGES } from '../constants'
 
-import { SignUpForm, Header } from '../components'
+import { AuthForm, Header } from '../components'
 
 const SignUpPage = ({
   user: {
@@ -30,9 +30,10 @@ const SignUpPage = ({
   return (
     <>
       <Header pageHeading={pageHeading} />
-      <SignUpForm
+      <AuthForm
+        type={AuthForm.types.SIGN_UP}
         onSubmit={handleUserSignUp}
-        onSignInButtonClick={redirectToSignIn}
+        onSecondaryButtonClick={redirectToSignIn}
       />
     </>
   )

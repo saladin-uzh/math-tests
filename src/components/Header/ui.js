@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 
-import { spacings, colors } from '../../constants'
+import { spacings, colors, media } from '../../constants'
+
+import { Button } from '..'
 
 export const Header = styled.header`
   background-color: ${colors.white};
@@ -37,9 +39,9 @@ export const MenuButton = styled.button`
   border: none;
   cursor: pointer;
 
-  @media only screen and (min-width: 756px) {
-    display: none;
-  }
+  ${media.medium`
+    display: none;  
+  `}
 `
 
 export const FaintedBg = styled.div`
@@ -54,9 +56,9 @@ export const FaintedBg = styled.div`
 
   z-index: 5;
 
-  @media only screen and (min-width: 756px) {
+  ${media.medium`
     display: none;
-  }
+  `}
 `
 
 export const UserBlock = styled.div`
@@ -81,7 +83,7 @@ export const UserBlock = styled.div`
   transition-timing-function: linear;
   transition-property: transform;
 
-  @media only screen and (min-width: 756px) {
+  ${media.medium`
     flex-direction: row;
     position: relative;
     height: auto;
@@ -89,7 +91,7 @@ export const UserBlock = styled.div`
     box-shadow: unset;
     transition: none;
     transform: none;
-  }
+  `}
 `
 
 export const UserName = styled.p`
@@ -100,22 +102,22 @@ export const UserName = styled.p`
   align-items: center;
   text-align: center;
   border-bottom: 1px solid ${colors.grey0};
+  cursor: pointer;
 
-  @media only screen and (min-width: 756px) {
+  ${media.medium`
     margin: 0 ${spacings.small} 0 0;
     height: auto;
     width: auto;
     display: block;
     text-align: left;
     border: unset;
-  }
+  `}
 `
 
-export const LogoutButton = styled.button`
-  margin: ${spacings.large} 0 0;
-  cursor: pointer;
+export const LogoutButton = styled(Button)`
+  margin: ${spacings.large} 0 0 0;
 
-  @media only screen and (min-width: 756px) {
-    margin: 0 ${spacings.large} 0 0;
-  }
+  ${media.medium`
+    margin: 0 0 0 ${spacings.small};
+  `}
 `
