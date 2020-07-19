@@ -7,21 +7,21 @@ export default (Component) => (props) => {
 
   const user = {
     api: {
-      signUp: (credentials, onSuccess, onError) => {
+      signUp: (credentials, onError) => {
         const { email, password, name } = credentials
 
         return auth
           .createUserWithEmailAndPassword(email, password)
-          .then(({ user }) => {
-            user.updateProfile({ displayName: name }).then(onSuccess, onError)
-          }, onError)
+          .then(
+            ({ user }) =>
+              user.updateProfile({ displayName: name }).catch(onError),
+            onError
+          )
       },
-      signIn: (credentials, onSuccess, onError) => {
+      signIn: (credentials, onError) => {
         const { email, password } = credentials
 
-        return auth
-          .signInWithEmailAndPassword(email, password)
-          .then(onSuccess, onError)
+        return auth.signInWithEmailAndPassword(email, password).catch(onError)
       },
       signOut: () =>
         auth.signOut().then(
