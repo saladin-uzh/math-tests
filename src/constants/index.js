@@ -1,5 +1,5 @@
 import spacings from './spacings'
 import colors from './colors'
-import routes from './routes'
+import routes, { PAGES } from './routes'
 
-export { spacings, colors, routes }
+export { spacings, colors, routes, PAGES }

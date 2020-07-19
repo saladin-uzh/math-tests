@@ -1,5 +1,5 @@
 import useAnswears from './useAnswears'
 import useStep from './useStep'
-import { PreloaderProvider, usePreloader, withPreloader } from './preloader'
+import { PreloaderProvider, usePreloader } from './preloader'
 
-export { useAnswears, useStep, PreloaderProvider, usePreloader, withPreloader }
+export { useAnswears, useStep, PreloaderProvider, usePreloader }

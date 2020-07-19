@@ -1,6 +1,6 @@
 import { HomePage, AdminPage, LoginPage, SignUpPage } from '../pages'
 
-const PAGES = {
+export const PAGES = {
   HOME: {
     path: '/',
     component: HomePage,

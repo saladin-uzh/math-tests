@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { useAnswears, useStep } from '../utils'
-import { withPreloader } from '../utils/preloader'
+import { useAnswears, useStep, usePreloader } from '../utils'
 import { withQuestions, withUser } from '../utils/firebase'
 
 import { Question, Header } from '../components'
@@ -12,12 +11,12 @@ const HomePage = ({
     data: { email, displayName },
   },
   questions,
-  preloader: { showPreloader, hidePreloader },
 }) => {
   const [step, setStep] = useStep()
   const [answears, setAnswears] = useAnswears()
   const [currentQuestion, setCurrentQuestion] = useState({})
   const [selectedAnswear, setSelectedAnswear] = useState(null)
+  const { showPreloader, hidePreloader } = usePreloader()
 
   const handleAnswearsChange = (newAnswear) => {
     const newAnswears = answears || []
@@ -86,4 +85,4 @@ const HomePage = ({
   )
 }
 
-export default withUser(withQuestions(withPreloader(HomePage)))
+export default withUser(withQuestions(HomePage))

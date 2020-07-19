@@ -10,7 +10,7 @@ import {
   SignupButton,
 } from './ui'
 
-export default ({ onLoginButtonClick }) => {
+export default ({ onSubmit, onSingUpButtonClick }) => {
   const [credentials, setCredentials] = useState({
     email: '',
     password: '',
@@ -19,16 +19,19 @@ export default ({ onLoginButtonClick }) => {
   const handleInputChange = (event) => {
     const { name, value } = event.target
 
-    setCredentials({
+    setCredentials((credentials) => ({
       ...credentials,
       [name]: value,
-    })
+    }))
   }
 
-  const handleLoginButtonClick = () => onLoginButtonClick(credentials)
+  const handleFormSubmit = (event) => {
+    event.preventDefault()
+    onSubmit(credentials)
+  }
 
   return (
-    <LoginForm>
+    <LoginForm onSubmit={handleFormSubmit}>
       <CredentialsFieldset>
         <InputLabel>
           Your email:
@@ -50,10 +53,10 @@ export default ({ onLoginButtonClick }) => {
         </InputLabel>
       </CredentialsFieldset>
       <ButtonsFieldset>
-        <SignupButton type="button">Sign Up</SignupButton>
-        <LoginButton type="button" onClick={handleLoginButtonClick}>
-          Log In
-        </LoginButton>
+        <SignupButton type="button" onClick={onSingUpButtonClick}>
+          Sign Up
+        </SignupButton>
+        <LoginButton type="submit">Log In</LoginButton>
       </ButtonsFieldset>
     </LoginForm>
   )

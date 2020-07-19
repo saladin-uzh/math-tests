@@ -1,7 +1,9 @@
 import React from 'react'
 
+import { usePreloader } from '../utils'
 import { withUser } from '../utils/firebase'
-import { usePreloader } from '../utils/preloader'
+
+import { PAGES } from '../constants'
 
 import { SignUpForm, Header } from '../components'
 
@@ -9,20 +11,33 @@ const SignUpPage = ({
   user: {
     api: { signUp },
   },
+  history,
 }) => {
-  const { showPreloader } = usePreloader()
+  const { showPreloader, hidePreloader } = usePreloader()
 
   const handleUserSignUp = (credentials) => {
     showPreloader()
-    signUp(credentials)
+    signUp(
+      credentials,
+      () => history.replace(PAGES.HOME.path),
+      ({ message }) => {
+        console.error(message)
+        hidePreloader()
+      }
+    )
   }
+
+  const redirectToSignIn = () => history.replace(PAGES.LOGIN.path)
 
   const pageHeading = 'Register'
 
   return (
     <>
       <Header pageHeading={pageHeading} />
-      <SignUpForm onSignUpButtonClick={handleUserSignUp} />
+      <SignUpForm
+        onSubmit={handleUserSignUp}
+        onSignInButtonClick={redirectToSignIn}
+      />
     </>
   )
 }

@@ -6,14 +6,16 @@ import {
   ButtonsFieldset,
   InputLabel,
   Input,
-  LoginButton,
-  SignupButton,
+  SignUpButton,
+  SignInButton,
 } from './ui'
 
-export default ({ onLoginButtonClick }) => {
+export default ({ onSubmit, onSignInButtonClick }) => {
   const [credentials, setCredentials] = useState({
+    name: '',
     email: '',
     password: '',
+    confirmPassword: '',
   })
 
   const handleInputChange = (event) => {
@@ -25,11 +27,24 @@ export default ({ onLoginButtonClick }) => {
     })
   }
 
-  const handleLoginButtonClick = () => onLoginButtonClick(credentials)
+  const handleFormSubmit = (event) => {
+    event.preventDefault()
+
+    onSubmit(credentials)
+  }
 
   return (
-    <LoginForm>
+    <LoginForm onSubmit={handleFormSubmit}>
       <CredentialsFieldset>
+        <InputLabel>
+          Your Name:
+          <Input
+            type="text"
+            name="name"
+            value={credentials.name}
+            onChange={handleInputChange}
+          />
+        </InputLabel>
         <InputLabel>
           Your email:
           <Input
@@ -44,16 +59,26 @@ export default ({ onLoginButtonClick }) => {
           <Input
             type="password"
             name="password"
+            pattern="^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,16}$"
             value={credentials.password}
+            onChange={handleInputChange}
+          />
+        </InputLabel>
+        <InputLabel>
+          Confirm your password:
+          <Input
+            type="password"
+            name="confirmPassword"
+            value={credentials.confirmPassword}
             onChange={handleInputChange}
           />
         </InputLabel>
       </CredentialsFieldset>
       <ButtonsFieldset>
-        <SignupButton type="button">Sign Up</SignupButton>
-        <LoginButton type="button" onClick={handleLoginButtonClick}>
-          Log In
-        </LoginButton>
+        <SignInButton type="button" onClick={onSignInButtonClick}>
+          Sign In
+        </SignInButton>
+        <SignUpButton type="submit">Sign Up</SignUpButton>
       </ButtonsFieldset>
     </LoginForm>
   )
