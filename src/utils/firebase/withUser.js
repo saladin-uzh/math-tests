@@ -4,19 +4,24 @@ import { useFirebase } from './context'
 
 export default (Component) => (props) => {
   const { auth } = useFirebase()
-  const { history, location } = props
 
   const user = {
     api: {
-      signIn: ({ email, password }) => {
-        const { from } = location.state || { from: { pathname: '/' } }
+      signUp: (credentials, onSuccess, onError) => {
+        const { email, password, name } = credentials
 
-        return auth.signInWithEmailAndPassword(email, password).then(
-          () => {
-            history.replace(from)
-          },
-          (err) => console.error(err)
-        )
+        return auth
+          .createUserWithEmailAndPassword(email, password)
+          .then(({ user }) => {
+            user.updateProfile({ displayName: name }).then(onSuccess, onError)
+          }, onError)
+      },
+      signIn: (credentials, onSuccess, onError) => {
+        const { email, password } = credentials
+
+        return auth
+          .signInWithEmailAndPassword(email, password)
+          .then(onSuccess, onError)
       },
       signOut: () =>
         auth.signOut().then(
