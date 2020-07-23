@@ -32,6 +32,7 @@ const Form = ({ type, onSubmit, onSecondaryButtonClick }) => {
     password: '',
     ...types[type].defaultCredentials,
   })
+  const [isPasswordConfirmed, setIsPasswordConfirmed] = useState(false)
 
   const handleInputChange = (event) => {
     const { name, value } = event.target
@@ -40,6 +41,20 @@ const Form = ({ type, onSubmit, onSecondaryButtonClick }) => {
       ...credentials,
       [name]: value,
     }))
+
+    if (isTypeSignUp)
+      switch (name) {
+        case 'confirmPassword':
+          if (value === credentials.password) setIsPasswordConfirmed(true)
+          else if (isPasswordConfirmed) setIsPasswordConfirmed(false)
+          break
+        case 'password':
+          if (isPasswordConfirmed) setIsPasswordConfirmed(false)
+          break
+        default:
+          break
+      }
+    else if (!isPasswordConfirmed) setIsPasswordConfirmed(true)
   }
 
   const handleFormSubmit = (event) => {

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 
-import { useAnswears, useStep, usePreloader } from '../utils'
+import { useAnswears, useStep, usePreloader, useTray } from '../utils'
 import { withQuestions, withUser, useUserAPI } from '../utils/firebase'
 
-import { Question, Header } from '../components'
 import { PAGES } from '../constants'
+
+import { Question, Header, Tooltip } from '../components'
 
 const HomePage = ({ user: { email, displayName }, questions, history }) => {
   const [answears, setAnswears] = useAnswears()
@@ -13,6 +14,7 @@ const HomePage = ({ user: { email, displayName }, questions, history }) => {
   const [step, setStep] = useStep()
   const { showPreloader, hidePreloader } = usePreloader()
   const { signOut } = useUserAPI()
+  const { addItemToTray } = useTray()
 
   const handleAnswearsChange = (newAnswear) => {
     const newAnswears = answears || []
@@ -26,6 +28,14 @@ const HomePage = ({ user: { email, displayName }, questions, history }) => {
 
     setAnswears(newAnswears)
   }
+
+  const handleSignOutButtonClick = () =>
+    signOut(({ message }) =>
+      addItemToTray({
+        type: Tooltip.types.ERROR,
+        text: message,
+      })
+    )
 
   const goToNextStep = (newAnswear) => {
     handleAnswearsChange(newAnswear)
@@ -67,7 +77,7 @@ const HomePage = ({ user: { email, displayName }, questions, history }) => {
       <Header
         pageHeading={pageHeading}
         userName={userName}
-        onLogoutButtonClick={signOut}
+        onLogoutButtonClick={handleSignOutButtonClick}
         onUserNameClick={redirectToProfile}
         hasSignedUser
       />

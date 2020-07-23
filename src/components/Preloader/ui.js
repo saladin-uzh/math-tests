@@ -4,6 +4,7 @@ import { colors } from '../../constants'
 
 export const Preloader = styled.div`
   position: fixed;
+  top: 0;
   display: ${({ isShown }) => (isShown ? 'flex' : 'none')};
   justify-content: center;
   align-items: center;
