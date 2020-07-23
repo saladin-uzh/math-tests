@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
+import { Button } from '..'
 import {
   QuestionForm,
   QuestionText,
@@ -7,7 +8,6 @@ import {
   AnswearLabel,
   AnswearInput,
   ButtonsFieldset,
-  PrevQuestionButton,
   SubmitAnswearButton,
 } from './ui'
 
@@ -16,8 +16,8 @@ export default ({
   questionText,
   answears,
   selectedAnswear,
-  nextStep,
-  prevStep,
+  onNextButtonClick,
+  onPrevButtonClick,
   isPrevButtonShown,
   isLastStep,
 }) => {
@@ -34,31 +34,39 @@ export default ({
     })
   }
 
+  const handleNextButtonClick = () => onNextButtonClick(answear)
+
   return (
     <QuestionForm>
       <QuestionText>{questionText}</QuestionText>
       <AnswearsFieldset>
         {answears &&
-          answears.map((answear, index) => (
-            <AnswearLabel key={`${id}=${index}`}>
-              <AnswearInput
-                type="radio"
-                name="answear"
-                value={index}
-                defaultChecked={selectedAnswear === index}
-                onChange={handleAnswearSelect}
-              />
-              {answear}
-            </AnswearLabel>
-          ))}
+          answears.map((answear, index) => {
+            const key = `${id}=${index}`
+            const answearProps = {
+              type: 'radio',
+              name: 'answear',
+              defaultChecked: selectedAnswear === index,
+              value: index,
+              onChange: handleAnswearSelect,
+            }
+
+            return (
+              <AnswearLabel key={key}>
+                <AnswearInput {...answearProps} />
+                {answear}
+              </AnswearLabel>
+            )
+          })}
       </AnswearsFieldset>
       <ButtonsFieldset>
         {isPrevButtonShown && (
-          <PrevQuestionButton type="button" onClick={() => prevStep()}>
-            {'<<'}
-          </PrevQuestionButton>
+          <Button onClick={onPrevButtonClick}>{'<<'}</Button>
         )}
-        <SubmitAnswearButton type="button" onClick={() => nextStep(answear)}>
+        <SubmitAnswearButton
+          type={Button.types.REGULAR}
+          onClick={handleNextButtonClick}
+        >
           {isLastStep ? 'Submit Answears' : 'Next Question'}
         </SubmitAnswearButton>
       </ButtonsFieldset>

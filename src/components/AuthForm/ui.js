@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import { spacings } from '../../constants'
 
-export const LoginForm = styled.form`
+export const AuthForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -30,15 +30,4 @@ export const InputLabel = styled.label`
 
 export const Input = styled.input`
   margin: ${spacings.small} 0 0;
-`
-
-export const SignUpButton = styled.button`
-  margin: 0 0 ${spacings.small};
-  cursor: pointer;
-`
-
-export const SignInButton = styled.button`
-  background: transparent;
-  border: none;
-  cursor: pointer;
 `

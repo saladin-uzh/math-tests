@@ -2,6 +2,8 @@ import styled from 'styled-components'
 
 import { spacings } from '../../constants'
 
+import { Button } from '..'
+
 export const QuestionForm = styled.form`
   display: flex;
   flex-direction: column;
@@ -41,11 +43,6 @@ export const ButtonsFieldset = styled.fieldset`
   margin: ${spacings.small} 0 0;
 `
 
-export const PrevQuestionButton = styled.button`
-  cursor: pointer;
-`
-
-export const SubmitAnswearButton = styled.button`
+export const SubmitAnswearButton = styled(Button)`
   margin: 0 ${spacings.large} 0 auto;
-  cursor: pointer;
 `

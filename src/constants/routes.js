@@ -1,4 +1,4 @@
-import { HomePage, AdminPage, LoginPage, SignUpPage } from '../pages'
+import { HomePage, UserProfilePage, LoginPage, SignUpPage } from '../pages'
 
 export const PAGES = {
   HOME: {
@@ -7,9 +7,9 @@ export const PAGES = {
     exact: true,
     isPrivate: true,
   },
-  ADMIN: {
-    path: '/admin',
-    component: AdminPage,
+  USER_PROFILE: {
+    path: '/profile',
+    component: UserProfilePage,
     isPrivate: true,
   },
   LOGIN: {
