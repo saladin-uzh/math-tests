@@ -20,10 +20,7 @@ export default () => {
 
       return auth.signInWithEmailAndPassword(email, password).catch(onError)
     },
-    signOut: () =>
-      auth.signOut().then(
-        () => localStorage.clear(),
-        (err) => console.error(err)
-      ),
+    signOut: (onError) =>
+      auth.signOut().then(() => localStorage.clear(), onError),
   }
 }

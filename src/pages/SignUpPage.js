@@ -1,25 +1,25 @@
 import React from 'react'
 
-import { usePreloader } from '../utils'
-import { withUser } from '../utils/firebase'
+import { usePreloader, useTray } from '../utils'
+import { useUserAPI } from '../utils/firebase'
 
 import { PAGES } from '../constants'
 
-import { AuthForm, Header } from '../components'
+import { AuthForm, Header, Tooltip } from '../components'
 
-const SignUpPage = ({
-  user: {
-    api: { signUp },
-  },
-  history,
-}) => {
+export default ({ history }) => {
   const { showPreloader, hidePreloader } = usePreloader()
+  const { signUp } = useUserAPI()
+  const { addItemToTray } = useTray()
 
   const handleUserSignUp = (credentials) => {
     showPreloader()
     signUp(credentials, ({ message }) => {
-      console.error(message)
       hidePreloader()
+      addItemToTray({
+        type: Tooltip.types.ERROR,
+        text: message,
+      })
     })
   }
 
@@ -38,5 +38,3 @@ const SignUpPage = ({
     </>
   )
 }
-
-export default withUser(SignUpPage)

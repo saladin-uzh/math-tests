@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 
-import { Button } from '..'
+import { useTray } from '../../utils'
+
+import { Button, Tooltip } from '..'
 import {
   AuthForm,
   CredentialsFieldset,
@@ -20,9 +22,9 @@ const types = {
     submitButtonText: 'Sign In',
   },
   [TYPES.SIGN_UP]: {
-    defaultCredentials: { name: '', passwordConfirm: '' },
+    defaultCredentials: { name: '', confirmPassword: '' },
     secondaryButtonText: 'Sign In',
-    submitButtonText: 'Sign Un',
+    submitButtonText: 'Sign Up',
   },
 }
 
@@ -32,6 +34,8 @@ const Form = ({ type, onSubmit, onSecondaryButtonClick }) => {
     password: '',
     ...types[type].defaultCredentials,
   })
+  const [isPasswordConfirmed, setIsPasswordConfirmed] = useState(false)
+  const { addItemToTray } = useTray()
 
   const handleInputChange = (event) => {
     const { name, value } = event.target
@@ -40,11 +44,29 @@ const Form = ({ type, onSubmit, onSecondaryButtonClick }) => {
       ...credentials,
       [name]: value,
     }))
+
+    switch (name) {
+      case 'confirmPassword':
+        if (value === credentials.password) setIsPasswordConfirmed(true)
+        else if (isPasswordConfirmed) setIsPasswordConfirmed(false)
+        break
+      case 'password':
+        if (isPasswordConfirmed) setIsPasswordConfirmed(false)
+        break
+      default:
+        break
+    }
   }
 
   const handleFormSubmit = (event) => {
     event.preventDefault()
-    onSubmit(credentials)
+
+    if (isPasswordConfirmed) onSubmit(credentials)
+    else
+      addItemToTray({
+        type: Tooltip.types.ERROR,
+        text: 'Passwords do not match',
+      })
   }
 
   const isTypeSignUp = type === TYPES.SIGN_UP
@@ -61,6 +83,7 @@ const Form = ({ type, onSubmit, onSecondaryButtonClick }) => {
               name="name"
               value={credentials.name}
               onChange={handleInputChange}
+              required
             />
           </InputLabel>
         )}
@@ -71,6 +94,7 @@ const Form = ({ type, onSubmit, onSecondaryButtonClick }) => {
             name="email"
             value={credentials.email}
             onChange={handleInputChange}
+            required
           />
         </InputLabel>
         <InputLabel>
@@ -85,6 +109,7 @@ const Form = ({ type, onSubmit, onSecondaryButtonClick }) => {
                 : undefined
             }
             onChange={handleInputChange}
+            required
           />
         </InputLabel>
         {isTypeSignUp && (
@@ -95,6 +120,7 @@ const Form = ({ type, onSubmit, onSecondaryButtonClick }) => {
               name="confirmPassword"
               value={credentials.confirmPassword}
               onChange={handleInputChange}
+              required
             />
           </InputLabel>
         )}
