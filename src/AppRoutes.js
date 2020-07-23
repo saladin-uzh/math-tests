@@ -37,7 +37,7 @@ export default () => {
                 ) : !isAuthentificated ? (
                   <Component {...componentProps} />
                 ) : (
-                  <Redirect to="/" />
+                  <Redirect to={componentProps.location.state.from || '/'} />
                 )
               }
             />

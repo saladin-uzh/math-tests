@@ -5,6 +5,8 @@ import Question from './Question'
 import AuthForm from './AuthForm'
 import TestsList from './TestsList'
 import SettingsItem from './SettingsItem'
+import Tooltip from './Tooltip'
+import Tray from './Tray'
 
 export {
   Header,
@@ -14,4 +16,6 @@ export {
   Button,
   TestsList,
   SettingsItem,
+  Tooltip,
+  Tray,
 }

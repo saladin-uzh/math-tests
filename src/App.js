@@ -1,19 +1,22 @@
 import React, { StrictMode } from 'react'
 
 import { FirebaseProvider } from './utils/firebase'
-import { PreloaderProvider } from './utils/preloader'
+import { PreloaderProvider, TrayProvider } from './utils'
 
 import { GlobalStyles } from './AppUI'
 import GlobalRoutes from './AppRoutes'
-import { Preloader } from './components'
+import { Preloader, Tray } from './components'
 
 export default () => (
   <StrictMode>
     <GlobalStyles />
     <FirebaseProvider>
       <PreloaderProvider>
+        <TrayProvider>
+          <GlobalRoutes />
+          <Tray />
+        </TrayProvider>
         <Preloader />
-        <GlobalRoutes />
       </PreloaderProvider>
     </FirebaseProvider>
   </StrictMode>
