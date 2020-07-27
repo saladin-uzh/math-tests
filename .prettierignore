@@ -1,2 +1,6 @@
-package.json
-build
+build/
+public/
+node_modules/
+functions/
+.firebase/
+.vscode/
