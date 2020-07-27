@@ -16,7 +16,6 @@ export const Header = styled.header`
 
 export const PageHeading = styled.h1`
   font-size: calc(${spacings.medium} + 2vmin);
-  color: ${colors.grey1};
 `
 
 export const Logo = styled.img`

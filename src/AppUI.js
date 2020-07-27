@@ -1,4 +1,5 @@
 import styled, { createGlobalStyle } from 'styled-components'
+import { colors } from './constants'
 
 export const GlobalStyles = createGlobalStyle`
   body {
@@ -8,11 +9,9 @@ export const GlobalStyles = createGlobalStyle`
       sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-  }
-
-  code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-      monospace;
+    
+    background: ${colors.white};
+    color: ${colors.grey1};
   }
 
   @keyframes App-logo-spin {
